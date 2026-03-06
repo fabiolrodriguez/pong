@@ -10,11 +10,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8w31r"]
 size = Vector2(4, 479)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ludyb"]
+size = Vector2(625.5, 16)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7860c"]
 size = Vector2(101, 19)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6iag"]
 radius = 12.165525
+
+[sub_resource type="LabelSettings" id="LabelSettings_ludyb"]
 
 [node name="world" type="Node2D" unique_id=1549769744]
 script = ExtResource("1_ludyb")
@@ -26,15 +31,30 @@ texture = ExtResource("1_8w31r")
 [node name="limite_direito" type="StaticBody2D" parent="Background" unique_id=1549253523]
 
 [node name="colisor_lateral_direta" type="CollisionShape2D" parent="Background/limite_direito" unique_id=56195748]
-visibility_layer = 2
+visibility_layer = 14
 position = Vector2(-316, -0.5)
 shape = SubResource("RectangleShape2D_8w31r")
 
 [node name="limite_esquerdo" type="StaticBody2D" parent="Background" unique_id=961211308]
 
 [node name="colisor_lateral_esquerda" type="CollisionShape2D" parent="Background/limite_esquerdo" unique_id=879334072]
+visibility_layer = 14
 position = Vector2(316, -0.5)
 shape = SubResource("RectangleShape2D_8w31r")
+
+[node name="gol_player" type="StaticBody2D" parent="Background" unique_id=286850856]
+
+[node name="colisor_bottom" type="CollisionShape2D" parent="Background/gol_player" unique_id=2042337774]
+position = Vector2(0.25, 232)
+shape = SubResource("RectangleShape2D_ludyb")
+debug_color = Color(0.86086196, 0.309639, 0.49053782, 0.41960785)
+
+[node name="gol_enemy" type="StaticBody2D" parent="Background" unique_id=852731149]
+
+[node name="colisor_top" type="CollisionShape2D" parent="Background/gol_enemy" unique_id=1888096108]
+position = Vector2(0.25, -233)
+shape = SubResource("RectangleShape2D_ludyb")
+debug_color = Color(0.86086196, 0.309639, 0.49053782, 0.41960785)
 
 [node name="enemy2D" type="AnimatableBody2D" parent="." unique_id=925834826]
 script = ExtResource("4_ludyb")
@@ -67,3 +87,22 @@ polygon = PackedVector2Array(-9, -9, -11, -5, -12, 0, -11, 5, -8, 9, -4, 12, 0, 
 
 [node name="player" parent="." unique_id=1171382406 instance=ExtResource("2_4opyw")]
 position = Vector2(319, 447)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=421965514]
+
+[node name="placar" type="Label" parent="CanvasLayer" unique_id=176797969]
+offset_left = 578.0
+offset_top = -4.0
+offset_right = 618.0
+offset_bottom = 19.0
+text = "0 x 0"
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1174869244]
+
+[node name="winner" type="Label" parent="CanvasLayer2" unique_id=1940449584]
+offset_left = 207.0
+offset_top = 175.0
+offset_right = 422.0
+offset_bottom = 296.0
+label_settings = SubResource("LabelSettings_ludyb")
+horizontal_alignment = 1

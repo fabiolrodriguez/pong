@@ -17,7 +17,7 @@ func _physics_process(delta):
 		score_enemy += 1
 		reset_ball()
 		
-	print("Player: ", score_player, "Enemy: ", score_enemy)
+	#print("Player: ", score_player, "Enemy: ", score_enemy)
 
 func reset_ball():
 
@@ -29,3 +29,4 @@ func reset_ball():
 	).normalized()
 
 	ball.velocity = dir * ball.speed
+  
