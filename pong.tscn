@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://cbrve2j7ssaiq"]
+
+[ext_resource type="Texture2D" uid="uid://ps8um4jrwfvb" path="res://assets/background.png" id="1_8w31r"]
+[ext_resource type="Script" uid="uid://dussi44vhumti" path="res://gol.gd" id="1_ludyb"]
+[ext_resource type="PackedScene" uid="uid://b0nv0qmpemoof" path="res://player.tscn" id="2_4opyw"]
+[ext_resource type="Script" uid="uid://dse8ocd07qu0p" path="res://ball_2d.gd" id="3_eipaa"]
+[ext_resource type="Script" uid="uid://dpfq02nio54r3" path="res://enemy.gd" id="4_ludyb"]
+[ext_resource type="Texture2D" uid="uid://ck1j5nuhcu8t6" path="res://assets/bar.png" id="5_trlu6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8w31r"]
+size = Vector2(4, 479)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7860c"]
+size = Vector2(101, 19)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a6iag"]
+radius = 12.165525
+
+[node name="world" type="Node2D" unique_id=1549769744]
+script = ExtResource("1_ludyb")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=735764640]
+position = Vector2(320, 240)
+texture = ExtResource("1_8w31r")
+
+[node name="limite_direito" type="StaticBody2D" parent="Background" unique_id=1549253523]
+
+[node name="colisor_lateral_direta" type="CollisionShape2D" parent="Background/limite_direito" unique_id=56195748]
+visibility_layer = 2
+position = Vector2(-316, -0.5)
+shape = SubResource("RectangleShape2D_8w31r")
+
+[node name="limite_esquerdo" type="StaticBody2D" parent="Background" unique_id=961211308]
+
+[node name="colisor_lateral_esquerda" type="CollisionShape2D" parent="Background/limite_esquerdo" unique_id=879334072]
+position = Vector2(316, -0.5)
+shape = SubResource("RectangleShape2D_8w31r")
+
+[node name="enemy2D" type="AnimatableBody2D" parent="." unique_id=925834826]
+script = ExtResource("4_ludyb")
+
+[node name="colisor" type="CollisionShape2D" parent="enemy2D" unique_id=1014624882]
+light_mask = 4
+visibility_layer = 9
+position = Vector2(321, 33)
+shape = SubResource("RectangleShape2D_7860c")
+debug_color = Color(0.8903534, 0.19589809, 0.6487685, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="enemy2D" unique_id=985345899]
+light_mask = 4
+visibility_layer = 9
+position = Vector2(321, 33)
+scale = Vector2(1.01, 1)
+texture = ExtResource("5_trlu6")
+
+[node name="ball2D" type="CharacterBody2D" parent="." unique_id=1758328135]
+script = ExtResource("3_eipaa")
+
+[node name="colisor" type="CollisionShape2D" parent="ball2D" unique_id=2145450171]
+light_mask = 8
+visibility_layer = 7
+position = Vector2(317, 237)
+shape = SubResource("CircleShape2D_a6iag")
+
+[node name="Polygon2D" type="Polygon2D" parent="ball2D/colisor" unique_id=1949692795]
+polygon = PackedVector2Array(-9, -9, -11, -5, -12, 0, -11, 5, -8, 9, -4, 12, 0, 12, 5, 12, 9, 9, 11, 5, 12, 1, 12, -3, 10, -8, 6, -11, 2, -12, -2, -12, -6, -11)
+
+[node name="player" parent="." unique_id=1171382406 instance=ExtResource("2_4opyw")]
+position = Vector2(319, 447)

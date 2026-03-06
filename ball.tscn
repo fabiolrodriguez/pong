@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bxevymji3t5c0"]
+
+[ext_resource type="Script" uid="uid://dse8ocd07qu0p" path="res://ball_2d.gd" id="1_x8fbi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_41u45"]
+radius = 12.165525
+
+[node name="ball" type="Node2D" unique_id=1574992840]
+
+[node name="ball2D" type="CharacterBody2D" parent="." unique_id=1548250345]
+script = ExtResource("1_x8fbi")
+
+[node name="colisor" type="CollisionShape2D" parent="ball2D" unique_id=596011778]
+light_mask = 8
+visibility_layer = 7
+shape = SubResource("CircleShape2D_41u45")
+
+[node name="Polygon2D" type="Polygon2D" parent="ball2D/colisor" unique_id=1695593500]
+polygon = PackedVector2Array(-9, -9, -11, -5, -12, 0, -11, 5, -8, 9, -4, 12, 0, 12, 5, 12, 9, 9, 11, 5, 12, 1, 12, -3, 10, -8, 6, -11, 2, -12, -2, -12, -6, -11)
