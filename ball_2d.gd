@@ -19,6 +19,28 @@ var gols_enemy = 0
 
 func _ready():
 	velocity = Vector2(1,1).normalized() * speed
+	start_position = global_position
+	reset_ball()	
+
+func atualizar_placar():
+	placar.text = "%s x %s" % [gols_player, gols_enemy]
+	
+func reset_ball():
+	# volta para a posição inicial
+	global_position = start_position
+
+	# define nova direção
+	velocity = Vector2(1,1).normalized() * speed
+	
+func checar_vitoria():
+
+	if gols_player >= 5:
+		winner.text = "VOCÊ VENCEU"
+		get_tree().paused = true
+
+	if gols_enemy >= 5:
+		winner.text = "ADVERSÁRIO VENCEU"
+		get_tree().paused = true	
 	randomize()
 	start_position = global_position
 	reset_ball()
