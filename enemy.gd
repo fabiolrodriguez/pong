@@ -1,7 +1,9 @@
 extends AnimatableBody2D
 
-@export var speed = 120
+@export var speed = 200
 @onready var ball = get_node("../ball2D")
+@export var min_x = 60.0
+@export var max_x = 580.0
 
 func _physics_process(delta):
 

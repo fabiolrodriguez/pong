@@ -6,15 +6,28 @@
 [ext_resource type="Script" uid="uid://dse8ocd07qu0p" path="res://ball_2d.gd" id="3_eipaa"]
 [ext_resource type="Script" uid="uid://dpfq02nio54r3" path="res://enemy.gd" id="4_ludyb"]
 [ext_resource type="Texture2D" uid="uid://ck1j5nuhcu8t6" path="res://assets/bar.png" id="5_trlu6"]
+[ext_resource type="AudioStream" uid="uid://k7f0nkhlwr0a" path="res://assets/hit.mp3" id="6_trlu6"]
+[ext_resource type="AudioStream" uid="uid://ckwk6rs7eabw8" path="res://assets/goal.mp3" id="7_a6iag"]
+[ext_resource type="AudioStream" uid="uid://buqd5ihfdelqm" path="res://assets/victory.mp3" id="8_iwa0j"]
+[ext_resource type="AudioStream" uid="uid://2fa2rm8mk1c1" path="res://assets/lose.mp3" id="9_bb6i3"]
+[ext_resource type="Texture2D" uid="uid://cqjhhqusi7upl" path="res://assets/ui_buttons_arrow_right_NORMAL.png" id="11_b45as"]
+[ext_resource type="Texture2D" uid="uid://d0ool8ruqmu5f" path="res://assets/ui_buttons_arrow_right_PRESSED.png" id="12_q7yeg"]
+[ext_resource type="Texture2D" uid="uid://de6tl0c3k1f2d" path="res://assets/ui_buttons_arrow_left_NORMAL.png" id="13_i4tco"]
+[ext_resource type="Texture2D" uid="uid://lic6ssgj3ov8" path="res://assets/ui_buttons_arrow_left_PRESSED.png" id="14_46yiu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8w31r"]
 size = Vector2(4, 479)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ludyb"]
+size = Vector2(625.5, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7860c"]
 size = Vector2(101, 19)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6iag"]
 radius = 12.165525
+
+[sub_resource type="LabelSettings" id="LabelSettings_ludyb"]
 
 [node name="world" type="Node2D" unique_id=1549769744]
 script = ExtResource("1_ludyb")
@@ -24,19 +37,42 @@ position = Vector2(320, 240)
 texture = ExtResource("1_8w31r")
 
 [node name="limite_direito" type="StaticBody2D" parent="Background" unique_id=1549253523]
+collision_mask = 6
 
 [node name="colisor_lateral_direta" type="CollisionShape2D" parent="Background/limite_direito" unique_id=56195748]
-visibility_layer = 2
+visibility_layer = 14
 position = Vector2(-316, -0.5)
 shape = SubResource("RectangleShape2D_8w31r")
 
 [node name="limite_esquerdo" type="StaticBody2D" parent="Background" unique_id=961211308]
+collision_mask = 6
 
 [node name="colisor_lateral_esquerda" type="CollisionShape2D" parent="Background/limite_esquerdo" unique_id=879334072]
+visibility_layer = 14
 position = Vector2(316, -0.5)
 shape = SubResource("RectangleShape2D_8w31r")
 
+[node name="gol_player" type="StaticBody2D" parent="Background" unique_id=286850856]
+collision_mask = 6
+
+[node name="colisor_bottom" type="CollisionShape2D" parent="Background/gol_player" unique_id=2042337774]
+visibility_layer = 8
+position = Vector2(0.25, 232)
+shape = SubResource("RectangleShape2D_ludyb")
+debug_color = Color(0.86086196, 0.309639, 0.49053782, 0.41960785)
+
+[node name="gol_enemy" type="StaticBody2D" parent="Background" unique_id=852731149]
+collision_mask = 6
+
+[node name="colisor_top" type="CollisionShape2D" parent="Background/gol_enemy" unique_id=1888096108]
+visibility_layer = 8
+position = Vector2(0.25, -233)
+shape = SubResource("RectangleShape2D_ludyb")
+debug_color = Color(0.86086196, 0.309639, 0.49053782, 0.41960785)
+
 [node name="enemy2D" type="AnimatableBody2D" parent="." unique_id=925834826]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("4_ludyb")
 
 [node name="colisor" type="CollisionShape2D" parent="enemy2D" unique_id=1014624882]
@@ -54,6 +90,8 @@ scale = Vector2(1.01, 1)
 texture = ExtResource("5_trlu6")
 
 [node name="ball2D" type="CharacterBody2D" parent="." unique_id=1758328135]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("3_eipaa")
 
 [node name="colisor" type="CollisionShape2D" parent="ball2D" unique_id=2145450171]
@@ -65,5 +103,87 @@ shape = SubResource("CircleShape2D_a6iag")
 [node name="Polygon2D" type="Polygon2D" parent="ball2D/colisor" unique_id=1949692795]
 polygon = PackedVector2Array(-9, -9, -11, -5, -12, 0, -11, 5, -8, 9, -4, 12, 0, 12, 5, 12, 9, 9, 11, 5, 12, 1, 12, -3, 10, -8, 6, -11, 2, -12, -2, -12, -6, -11)
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ball2D" unique_id=1220322338]
+stream = ExtResource("6_trlu6")
+area_mask = 2
+
+[node name="AudioStreamPlayerGoal" type="AudioStreamPlayer2D" parent="ball2D" unique_id=56439604]
+stream = ExtResource("7_a6iag")
+area_mask = 2
+
+[node name="AudioStreamPlayerVictory" type="AudioStreamPlayer2D" parent="ball2D" unique_id=1311811549]
+process_mode = 2
+stream = ExtResource("8_iwa0j")
+area_mask = 2
+
+[node name="AudioStreamPlayerLose" type="AudioStreamPlayer2D" parent="ball2D" unique_id=1861625978]
+process_mode = 2
+stream = ExtResource("9_bb6i3")
+area_mask = 2
+
 [node name="player" parent="." unique_id=1171382406 instance=ExtResource("2_4opyw")]
 position = Vector2(319, 447)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=421965514]
+
+[node name="placar" type="Label" parent="CanvasLayer" unique_id=176797969]
+offset_left = 578.0
+offset_top = -4.0
+offset_right = 618.0
+offset_bottom = 19.0
+text = "0 x 0"
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1174869244]
+
+[node name="VictoryPanel" type="Panel" parent="CanvasLayer2" unique_id=697017172]
+process_mode = 2
+offset_left = 188.0
+offset_top = 192.0
+offset_right = 429.0
+offset_bottom = 285.0
+
+[node name="QuitButton" type="Button" parent="CanvasLayer2/VictoryPanel" unique_id=1583940679]
+layout_mode = 0
+offset_left = 167.0
+offset_top = 33.0
+offset_right = 210.0
+offset_bottom = 64.0
+text = "SAIR"
+
+[node name="RestartButton" type="Button" parent="CanvasLayer2/VictoryPanel" unique_id=2000499208]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 31.0
+offset_right = 112.0
+offset_bottom = 62.0
+text = "REINICIAR"
+
+[node name="winner" type="Label" parent="CanvasLayer2/VictoryPanel" unique_id=1940449584]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 5.0
+offset_right = 218.0
+offset_bottom = 36.0
+label_settings = SubResource("LabelSettings_ludyb")
+horizontal_alignment = 1
+
+[node name="controls" type="CanvasLayer" parent="." unique_id=542288734]
+
+[node name="buttom_right" type="TouchScreenButton" parent="controls" unique_id=1358612304]
+position = Vector2(529, 395)
+scale = Vector2(2, 2)
+texture_normal = ExtResource("11_b45as")
+texture_pressed = ExtResource("12_q7yeg")
+action = "ui_right"
+visibility_mode = 1
+
+[node name="buttom_left" type="TouchScreenButton" parent="controls" unique_id=70559786]
+position = Vector2(48, 396)
+scale = Vector2(2, 2)
+texture_normal = ExtResource("13_i4tco")
+texture_pressed = ExtResource("14_46yiu")
+action = "ui_left"
+visibility_mode = 1
+
+[connection signal="pressed" from="CanvasLayer2/VictoryPanel/QuitButton" to="ball2D" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/VictoryPanel/RestartButton" to="ball2D" method="_on_restart_button_pressed"]

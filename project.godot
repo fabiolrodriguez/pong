@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=640
 window/size/viewport_height=480
+window/stretch/mode="canvas_items"
+
+[global_group]
+
+main_camera=""
 
 [layer_names]
 
@@ -26,6 +31,9 @@ window/size/viewport_height=480
 2d_render/layer_2="player"
 2d_render/layer_3="enemy"
 2d_render/layer_4="ball"
+2d_physics/layer_1="background"
+2d_physics/layer_2="paddle"
+2d_physics/layer_3="bola"
 
 [physics]
 
@@ -33,4 +41,5 @@ window/size/viewport_height=480
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"

@@ -9,6 +9,8 @@ size = Vector2(100, 20)
 [node name="player" type="Node2D" unique_id=1171382406]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1432988777]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_onrkg")
 
 [node name="colisor" type="CollisionShape2D" parent="CharacterBody2D" unique_id=2100925205]
