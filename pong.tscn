@@ -93,11 +93,6 @@ texture = ExtResource("5_trlu6")
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("3_eipaa")
-speed = null
-posicao = null
-speed_increment = null
-max_speed = null
-min_vertical_ratio = null
 
 [node name="colisor" type="CollisionShape2D" parent="ball2D" unique_id=2145450171]
 light_mask = 8
