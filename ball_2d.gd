@@ -10,41 +10,20 @@ var start_position : Vector2
 @onready var hit_goal = $AudioStreamPlayerGoal
 @onready var hit_victory = $AudioStreamPlayerVictory
 @onready var hit_lose = $AudioStreamPlayerLose
+@onready var ball = $colisor/Polygon2D
 @export var speed_increment = 8.0
 @export var max_speed = 320.0
 @export var min_vertical_ratio = 0.35
 
 var gols_player = 0
 var gols_enemy = 0
+var red_level = 0.0
 
 func _ready():
 	velocity = Vector2(1,1).normalized() * speed
 	start_position = global_position
-	reset_ball()	
-
-func atualizar_placar():
-	placar.text = "%s x %s" % [gols_player, gols_enemy]
-	
-func reset_ball():
-	# volta para a posição inicial
-	global_position = start_position
-
-	# define nova direção
-	velocity = Vector2(1,1).normalized() * speed
-	
-func checar_vitoria():
-
-	if gols_player >= 5:
-		winner.text = "VOCÊ VENCEU"
-		get_tree().paused = true
-
-	if gols_enemy >= 5:
-		winner.text = "ADVERSÁRIO VENCEU"
-		get_tree().paused = true	
-	randomize()
-	start_position = global_position
-	reset_ball()
 	victory_panel.visible = false
+	reset_ball()
 
 func atualizar_placar():
 	placar.text = "%s x %s" % [gols_player, gols_enemy]
@@ -52,10 +31,12 @@ func atualizar_placar():
 func reset_ball():
 	global_position = start_position
 
-	var dir_x = [-1, 1].pick_random()
+	var dir_x = [-0.6, 0.6].pick_random()
 	var dir_y = randf_range(-0.6, 0.6)
 
 	var dir = Vector2(dir_x, dir_y).normalized()
+	
+	ball.modulate = Color(1, 1, 1, 1)
 	
 	speed = 300
 
@@ -96,25 +77,27 @@ func _fix_ball_angle(v: Vector2) -> Vector2:
 	dir.x = sign_nonzero(dir.x) * sqrt(max(0.0, 2.0 - dir.y * dir.y))
 
 	return dir.normalized()
-
+	
 func _physics_process(delta):
-
+	
 	var collision = move_and_collide(velocity * delta)
 
 	if collision:
 		#velocity = velocity.bounce(collision.get_normal())
 		var collider = collision.get_collider()
 		hit_sound.play()
-		if collider and collider.is_in_group("paddle"):
-			speed = min(speed + speed_increment, max_speed)
-			var camera = get_tree().get_first_node_in_group("main_camera")
-			if camera:
-				camera.shake(5.0)
+		if collider.name == "player":
+			#speed = min(speed + speed_increment, max_speed)
+			collider.flash_hit()
 
-		speed = speed + 20
+		speed = speed + 30
 		velocity = velocity.bounce(collision.get_normal()).normalized() * speed
 		global_position += collision.get_normal() * 4.0		
 		posicao = global_position
+		
+		red_level += 0.01
+		red_level = clamp(red_level, 0, 1)		
+		ball.modulate = Color(1, 1 - red_level, 1 - red_level)
 		
 		if collider.name == "gol_enemy":
 			gols_player = gols_player + 1

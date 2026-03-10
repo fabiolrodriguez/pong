@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://ps8um4jrwfvb" path="res://assets/background.png" id="1_8w31r"]
 [ext_resource type="Script" uid="uid://dussi44vhumti" path="res://gol.gd" id="1_ludyb"]
-[ext_resource type="PackedScene" uid="uid://b0nv0qmpemoof" path="res://player.tscn" id="2_4opyw"]
 [ext_resource type="Script" uid="uid://dse8ocd07qu0p" path="res://ball_2d.gd" id="3_eipaa"]
 [ext_resource type="Script" uid="uid://dpfq02nio54r3" path="res://enemy.gd" id="4_ludyb"]
 [ext_resource type="Texture2D" uid="uid://ck1j5nuhcu8t6" path="res://assets/bar.png" id="5_trlu6"]
@@ -14,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://d0ool8ruqmu5f" path="res://assets/ui_buttons_arrow_right_PRESSED.png" id="12_q7yeg"]
 [ext_resource type="Texture2D" uid="uid://de6tl0c3k1f2d" path="res://assets/ui_buttons_arrow_left_NORMAL.png" id="13_i4tco"]
 [ext_resource type="Texture2D" uid="uid://lic6ssgj3ov8" path="res://assets/ui_buttons_arrow_left_PRESSED.png" id="14_46yiu"]
+[ext_resource type="Script" uid="uid://on4rqb4tmuid" path="res://character_body_2d.gd" id="14_b45as"]
+[ext_resource type="AudioStream" uid="uid://dtldy6uii6p5x" path="res://assets/bg.mp3" id="15_q7yeg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8w31r"]
 size = Vector2(4, 479)
@@ -28,6 +29,9 @@ size = Vector2(101, 19)
 radius = 12.165525
 
 [sub_resource type="LabelSettings" id="LabelSettings_ludyb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q7yeg"]
+size = Vector2(100, 20)
 
 [node name="world" type="Node2D" unique_id=1549769744]
 script = ExtResource("1_ludyb")
@@ -93,11 +97,6 @@ texture = ExtResource("5_trlu6")
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("3_eipaa")
-speed = null
-posicao = null
-speed_increment = null
-max_speed = null
-min_vertical_ratio = null
 
 [node name="colisor" type="CollisionShape2D" parent="ball2D" unique_id=2145450171]
 light_mask = 8
@@ -125,9 +124,6 @@ area_mask = 2
 process_mode = 2
 stream = ExtResource("9_bb6i3")
 area_mask = 2
-
-[node name="player" parent="." unique_id=1171382406 instance=ExtResource("2_4opyw")]
-position = Vector2(319, 447)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=421965514]
 
@@ -189,6 +185,23 @@ texture_normal = ExtResource("13_i4tco")
 texture_pressed = ExtResource("14_46yiu")
 action = "ui_left"
 visibility_mode = 1
+
+[node name="player" type="CharacterBody2D" parent="." unique_id=847189703]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("14_b45as")
+
+[node name="colisor" type="CollisionShape2D" parent="player" unique_id=1103338228 groups=["paddle"]]
+light_mask = 2
+position = Vector2(321, 446)
+shape = SubResource("RectangleShape2D_q7yeg")
+
+[node name="Sprite2D" type="Sprite2D" parent="player" unique_id=1803505065]
+position = Vector2(320, 447)
+texture = ExtResource("5_trlu6")
+
+[node name="bg" type="AudioStreamPlayer2D" parent="." unique_id=704719085]
+stream = ExtResource("15_q7yeg")
 
 [connection signal="pressed" from="CanvasLayer2/VictoryPanel/QuitButton" to="ball2D" method="_on_quit_button_pressed"]
 [connection signal="pressed" from="CanvasLayer2/VictoryPanel/RestartButton" to="ball2D" method="_on_restart_button_pressed"]
